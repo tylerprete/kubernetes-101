@@ -1,3 +1,4 @@
+{{ if .Prod }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,3 +14,20 @@ spec:
    - port: 80
      targetPort: 5000
      protocol: TCP
+{{ else }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-beta
+  labels:
+    name: web-beta
+    app: demo
+spec:
+  selector:
+    name: web-beta
+  type: NodePort
+  ports:
+   - port: 8080
+     targetPort: 5000
+     protocol: TCP
+{{ end }}
